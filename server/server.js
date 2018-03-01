@@ -12,6 +12,9 @@ app.use(function(req, res, next)
 var readingController = require('./readingController');
 app.use('/readings', readingController);
 
+var authController = require('./auth/authController');
+app.use('/', authController);
+
 var port = process.env.PORT || 3000;
 var server = app.listen(port, function()
 {

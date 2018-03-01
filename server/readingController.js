@@ -1,13 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
+var verifyToken = require('./auth/verifyToken');
 
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
 var reading = require('./reading');
 
-router.post('/', function(req, res)
+router.post('/', verifyToken, function(req, res, next)
 {
 	reading.create(
 	{
