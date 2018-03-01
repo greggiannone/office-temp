@@ -1,24 +1,32 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'
 
 import { DataAccessService } from './data-access.service'
+import { AuthInterceptorService } from './auth-interceptor.service'
 import { AppComponent } from './app.component';
 import { SubmitReadingComponent } from './submit-reading/submit-reading.component';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    SubmitReadingComponent
+    SubmitReadingComponent,
+    LoginComponent
   ],
   imports: [
     HttpClientModule,
     BrowserModule,
     FormsModule
   ],
-  providers: [DataAccessService],
+  providers: [DataAccessService,
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 

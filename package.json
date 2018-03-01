@@ -23,6 +23,9 @@
     "@angular/router": "^5.2.0",
     "core-js": "^2.4.1",
     "express": "^4.16.2",
+    "fingerprintjs": "^0.5.3",
+    "fingerprintjs2": "^1.6.1",
+    "jwt-decode": "^2.2.0",
     "mongoose": "^5.0.7",
     "rxjs": "^5.5.6",
     "zone.js": "^0.8.19"
