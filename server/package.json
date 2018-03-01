@@ -1,0 +1,14 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Server for the office temp monitoring server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Greg Giannone",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
