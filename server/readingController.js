@@ -11,8 +11,8 @@ router.post('/', function(req, res)
 {
 	reading.create(
 	{
-		temp: req.body.reading,
-		time: Date.now()
+		temp: req.body.temp,
+		time: req.body.time
 	}, function(err, reading)
 	{
 		if (err) return res.status(500).send("There was a problem adding the information to the database.");
