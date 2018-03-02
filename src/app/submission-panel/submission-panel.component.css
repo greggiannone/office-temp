@@ -1,0 +1,28 @@
+#panel
+{
+	position: absolute;
+	align-self: right;
+	display: flex;
+	flex-direction: column;
+	top: 0px;
+	right: 20px;
+	width: 300px;
+}
+
+#form
+{
+	background-color: rgb(62, 62, 199);
+	flex: 1;
+	padding: 20px;
+}
+
+#collapseButton
+{
+	width: 100px;
+	right: 0px;
+}
+
+.visible
+{
+	height: 30%;
+}

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { DataAccessService } from './data-access.service'
 import { AuthInterceptorService } from './auth-interceptor.service'
@@ -23,7 +24,8 @@ import { SubmissionPanelComponent } from './submission-panel/submission-panel.co
   imports: [
     HttpClientModule,
     BrowserModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule
   ],
   providers: [DataAccessService,
   {

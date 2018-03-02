@@ -10,11 +10,13 @@ export class SubmissionPanelComponent implements OnInit {
 
 	currScreen: Screen;
 	Screen = Screen;
+	visible: boolean;
 
 	constructor(private DAService: DataAccessService) 
 	{
 		// Wait until we check login to show a prompt
 		this.currScreen = null;
+		this.visible = false;
 	}
 
 	ngOnInit() 
@@ -36,6 +38,18 @@ export class SubmissionPanelComponent implements OnInit {
 	onLogin()
 	{
 		this.currScreen = Screen.Submit;
+	}
+
+	logout()
+	{
+		// CURRENTLY FOR TESTING ONLY
+		localStorage.setItem('id_token', null);
+		this.currScreen = Screen.Login;
+	}
+
+	toggleVisible()
+	{
+		this.visible = !this.visible;
 	}
 }
 

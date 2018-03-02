@@ -1,3 +1,9 @@
-<app-login *ngIf="currScreen == Screen.Login"
-           (onLogin)="onLogin()"></app-login>
-<app-submit-reading *ngIf="currScreen == Screen.Submit"></app-submit-reading>
+<div id="panel" [ngClass]="{'visible':visible}">
+  <div *ngIf="visible" id="form">
+    <app-login *ngIf="currScreen == Screen.Login"
+              (onLogin)="onLogin()"></app-login>
+    <app-submit-reading *ngIf="currScreen == Screen.Submit"></app-submit-reading>
+    <button *ngIf="currScreen == Screen.Submit" (click)="logout()">Logout</button>
+  </div>
+  <button id="collapseButton" (click)="toggleVisible()"><span *ngIf="visible">^^^</span><span *ngIf="!visible">vvv</span></button>
+</div>
