@@ -28,6 +28,16 @@ router.get('/', function(req, res)
 		if (err) return res.status(500).send("There was a problem finding the readings.");
         res.status(200).send(readings);
 	})
-})
+});
+
+router.get('/current', function(req, res)
+{
+	reading.find().sort({"time": -1}).limit(1).exec(function(err, result)
+	{
+		console.log(result);
+		if (err) return res.status(500).send("There was a problem finding the reading.");
+		res.status(200).send(result);
+	});
+});
 
 module.exports = router;
