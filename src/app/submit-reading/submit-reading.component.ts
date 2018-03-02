@@ -26,8 +26,15 @@ export class SubmitReadingComponent implements OnInit {
 			time: new Date()
 		})).subscribe(reading => 
 		{
-			this.result = JSON.stringify(reading);
-			this.onSubmit.emit();
+			if (reading["error"])
+			{
+				this.result = reading["error"]
+			}
+			else
+			{
+				this.result = `A temperature of ${reading["temp"]} has been added.`;
+				this.onSubmit.emit();
+			}
 		});
 	}
 

@@ -21,10 +21,16 @@ export class LoginComponent implements OnInit {
 
 	onClickLogin()
 	{
-		this.DAService.login(this.getId().toString(), this.password).subscribe(result => 
+		this.DAService.login(this.getId().toString() + 'hi', this.password).subscribe(result => 
 		{
-			console.log(result);
-			this.onLogin.emit();
+			if (result["auth"])
+			{
+				this.onLogin.emit();
+			}
+			else
+			{
+				this.error = "There was an error logging in";
+			}
 		});
 	}
 

@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
+var verifyToken = require('./verifyToken');
 
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
@@ -23,6 +24,11 @@ router.post('/login', function(req, res)
 	});
 
 	res.status(200).send({ auth: true, token: token });
+});
+
+router.get('/pingLogin', verifyToken, function(req, res)
+{
+	res.status(200).send({ auth: true });
 });
 
 module.exports = router;

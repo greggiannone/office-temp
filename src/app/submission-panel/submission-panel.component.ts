@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataAccessService } from '../data-access.service';
 
 @Component({
 	selector: 'app-submission-panel',
@@ -10,14 +11,26 @@ export class SubmissionPanelComponent implements OnInit {
 	currScreen: Screen;
 	Screen = Screen;
 
-	constructor() 
+	constructor(private DAService: DataAccessService) 
 	{
-		this.currScreen = Screen.Login;
-		console.log(this.currScreen);
+		// Wait until we check login to show a prompt
+		this.currScreen = null;
 	}
 
 	ngOnInit() 
 	{
+		this.DAService.isLoggedIn().subscribe(result =>
+		{
+			console.log('here');
+			if (!result["auth"])
+			{
+				this.currScreen = Screen.Login;
+			}
+			else
+			{
+				this.currScreen = Screen.Submit;
+			}
+		})
 	}
 
 	onLogin()
