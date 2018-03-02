@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { DataAccessService } from '../data-access.service'
 import { Reading } from '../models/reading';
 
@@ -9,20 +9,26 @@ import { Reading } from '../models/reading';
 })
 export class SubmitReadingComponent implements OnInit {
 
+	@Output() onSubmit = new EventEmitter();
+
 	reading: number;
-	recentSubmission: string;
+	result: string;
 
 	constructor(private DAService: DataAccessService) { }
 
 	ngOnInit() {
 	}
 
-	onSubmit()
+	onClickSubmit()
 	{
 		this.DAService.addReading(<Reading>({
 			temp: this.reading,
 			time: new Date()
-		})).subscribe(reading => this.recentSubmission = JSON.stringify(reading));
+		})).subscribe(reading => 
+		{
+			this.result = JSON.stringify(reading);
+			this.onSubmit.emit();
+		});
 	}
 
 }

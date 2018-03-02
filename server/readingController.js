@@ -36,7 +36,7 @@ router.get('/current', function(req, res)
 	{
 		console.log(result);
 		if (err) return res.status(500).send("There was a problem finding the reading.");
-		res.status(200).send(result);
+		res.status(200).send(result[0]);
 	});
 });
 

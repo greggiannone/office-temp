@@ -8,13 +8,17 @@ import { AuthInterceptorService } from './auth-interceptor.service'
 import { AppComponent } from './app.component';
 import { SubmitReadingComponent } from './submit-reading/submit-reading.component';
 import { LoginComponent } from './login/login.component';
+import { CurrentTempComponent } from './current-temp/current-temp.component';
+import { SubmissionPanelComponent } from './submission-panel/submission-panel.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     SubmitReadingComponent,
-    LoginComponent
+    LoginComponent,
+    CurrentTempComponent,
+    SubmissionPanelComponent
   ],
   imports: [
     HttpClientModule,

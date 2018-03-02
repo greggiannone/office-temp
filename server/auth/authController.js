@@ -12,6 +12,7 @@ require('dotenv').config();
 router.post('/login', function(req, res)
 {
 	var targetPassword = bcrypt.hashSync(process.env.LOGIN_PW, 8);
+	if (!req.body.password) return res.status(500).send("Password was not sent");
 	var passwordIsValid = bcrypt.compareSync(req.body.password, targetPassword);
 
 	if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });

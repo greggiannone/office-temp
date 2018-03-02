@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { DataAccessService } from '../data-access.service'
 
 @Component({
@@ -7,6 +7,8 @@ import { DataAccessService } from '../data-access.service'
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+
+	@Output() onLogin = new EventEmitter();
 
 	password: string;
 	error: string;
@@ -19,7 +21,11 @@ export class LoginComponent implements OnInit {
 
 	onClickLogin()
 	{
-		this.DAService.login(this.getId().toString(), this.password).subscribe(result => this.error = JSON.stringify(result));
+		this.DAService.login(this.getId().toString(), this.password).subscribe(result => 
+		{
+			console.log(result);
+			this.onLogin.emit();
+		});
 	}
 
 	// Found at https://stackoverflow.com/questions/41427192/angularjs-client-browser-fingerprint

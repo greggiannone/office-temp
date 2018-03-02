@@ -1,2 +1,2 @@
-<app-login></app-login>
-<app-submit-reading></app-submit-reading>
+<app-current-temp *ngIf="currReading" [reading]="currReading"></app-current-temp>
+<app-submission-panel></app-submission-panel>
