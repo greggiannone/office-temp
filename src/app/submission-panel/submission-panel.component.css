@@ -7,22 +7,28 @@
 	top: 0px;
 	right: 20px;
 	width: 300px;
+	justify-content: space-between;
 }
 
 #form
 {
 	background-color: rgb(62, 62, 199);
 	flex: 1;
+	border-radius: 0px 0px 0px 5px;
 	padding: 20px;
+	overflow: hidden;
 }
 
 #collapseButton
 {
 	width: 100px;
-	right: 0px;
+	margin-left: auto;
+	background-color: rgb(86, 106, 173);
+	border: 0px;
+	border-radius: 0px 0px 5px 5px;
 }
 
-.visible
+#collapseButton:focus
 {
-	height: 30%;
+	outline: 0px;
 }

@@ -1,22 +1,39 @@
 import { Component, OnInit } from '@angular/core';
 import { DataAccessService } from '../data-access.service';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
 	selector: 'app-submission-panel',
 	templateUrl: './submission-panel.component.html',
-	styleUrls: ['./submission-panel.component.css']
+	styleUrls: ['./submission-panel.component.css'],
+	animations: [
+		trigger('loginVisible', [
+			state('visible', style({ 
+				'height': '*',
+				'padding-top': '20px',
+				'padding-bottom': '20px'
+			})),
+			state('collapsed', style({ 
+				'height': '0px',
+				'padding-top': '0px',
+				'padding-bottom': '0px'
+			})),
+			transition('visible => collapsed', animate('200ms')),
+			transition('collapsed => visible', animate('200ms'))
+		])
+	]
 })
 export class SubmissionPanelComponent implements OnInit {
 
 	currScreen: Screen;
 	Screen = Screen;
-	visible: boolean;
+	visible: string;
 
 	constructor(private DAService: DataAccessService) 
 	{
 		// Wait until we check login to show a prompt
 		this.currScreen = null;
-		this.visible = false;
+		this.visible = 'collapsed';
 	}
 
 	ngOnInit() 
@@ -49,7 +66,7 @@ export class SubmissionPanelComponent implements OnInit {
 
 	toggleVisible()
 	{
-		this.visible = !this.visible;
+		this.visible = this.visible === 'collapsed' ? 'visible' : 'collapsed';
 	}
 }
 
