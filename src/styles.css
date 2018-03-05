@@ -6,3 +6,28 @@ body
 	padding: 20px;
 	font-family: Arial, Helvetica, sans-serif;
 }
+
+button
+{
+	border: 0px;
+	background-color: rgb(86, 106, 173);
+	padding: 4px;
+}
+
+button:focus
+{
+	outline: 0px;
+}
+
+input
+{
+	margin-right: 10px;
+	background-color: rgb(172, 212, 238);
+	border: none;
+	padding: 4px;
+}
+
+input:focus
+{
+	outline: none;
+}

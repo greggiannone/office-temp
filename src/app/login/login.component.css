@@ -1,0 +1,23 @@
+button
+{
+	width: 80px;
+}
+
+#passLabel
+{
+	padding-top: 0px;
+	padding-bottom: 10px;
+	margin: 0px;
+}
+
+#error
+{
+	padding-bottom: 0px;
+	padding-top: 10px;
+	margin: 0px;
+}
+
+input
+{
+	width: 160px;
+}

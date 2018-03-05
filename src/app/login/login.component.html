@@ -1,3 +1,4 @@
-<input [(ngModel)]="password">
+<p id="passLabel">Password:</p>
+<input type='password' [(ngModel)]="password">
 <button (click)="onClickLogin()">Login</button>
-<p *ngIf="error">{{error}}</p>
+<p *ngIf="error" id="error">{{error}}</p>

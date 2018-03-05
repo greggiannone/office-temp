@@ -10,6 +10,7 @@ import { Reading } from '../models/reading';
 export class SubmitReadingComponent implements OnInit {
 
 	@Output() onSubmit = new EventEmitter();
+	@Output() onLogout = new EventEmitter();
 
 	reading: number;
 	result: string;
@@ -36,6 +37,13 @@ export class SubmitReadingComponent implements OnInit {
 				this.onSubmit.emit();
 			}
 		});
+	}
+	
+	logout()
+	{
+		// CURRENTLY FOR TESTING ONLY
+		localStorage.setItem('id_token', null);
+		this.onLogout.emit();
 	}
 
 }
