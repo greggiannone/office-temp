@@ -5,5 +5,8 @@
     <app-submit-reading *ngIf="currScreen == Screen.Submit"
     (onLogout)="onLogout()"></app-submit-reading>
   </div>
-  <button id="collapseButton" (click)="toggleVisible()"><span *ngIf="visible === 'visible'">^^^</span><span *ngIf="visible === 'collapsed'">vvv</span></button>
+  <button id="collapseButton" (click)="toggleVisible()">
+    <i class="arrow down" *ngIf="visible === 'collapsed'"></i>
+    <i class="arrow up" *ngIf="visible === 'visible'"></i>
+  </button>
 </div>

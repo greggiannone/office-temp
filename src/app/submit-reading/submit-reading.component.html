@@ -1,4 +1,4 @@
-<input [(ngModel)]="reading">
+<input [(ngModel)]="reading" (keydown.enter)="onClickSubmit()">
 <button (click)="onClickSubmit()">Submit reading</button>
 <button (click)="logout()">Logout</button>
 

@@ -21,11 +21,12 @@
 
 #collapseButton
 {
-	width: 100px;
+	width: 50px;
 	margin-left: auto;
 	background-color: rgb(86, 106, 173);
 	border: 0px;
 	border-radius: 0px 0px 5px 5px;
+	padding: 10px;
 }
 
 #collapseButton:focus
