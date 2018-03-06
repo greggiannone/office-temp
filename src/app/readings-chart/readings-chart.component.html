@@ -1,18 +1,34 @@
-<ngx-charts-line-chart *ngIf="readings"
-  [view]="view"
-  [results]="formattedData"
-  [scheme]="colorScheme"
-  [gradient]="gradient"
-  [xAxis]="showXAxis"
-  [yAxis]="showYAxis"
-  [legend]="showLegend"
-  [showXAxisLabel]="showXAxisLabel"
-  [showYAxisLabel]="showYAxisLabel"
-  [xAxisLabel]="xAxisLabel"
-  [yAxisLabel]="yAxisLabel"
-  [xScaleMax]="xScaleMax"
-  [xScaleMin]="xScaleMin"
-  [yScaleMax]="yScaleMax"
-  [yScaleMin]="yScaleMin"
-  [autoScale]="autoScale"
-  [activeEntries]="activeEntries"></ngx-charts-line-chart>
+<div id="top">
+  <div id="browser">
+    <i class="arrow left"></i>
+    <p>3/5/18 - 3/10/18</p>
+    <i class="arrow right"></i>
+  </div>
+  <div id="chart">
+    <ul id="weekdays">
+      <li>Monday</li>
+      <li>Tuesday</li>
+      <li>Wednesday</li>
+      <li>Thursday</li>
+      <li>Friday</li>
+    </ul>
+    <ngx-charts-line-chart *ngIf="readings"
+      [view]="view"
+      [results]="formattedData"
+      [scheme]="colorScheme"
+      [gradient]="gradient"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [legend]="showLegend"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
+      [xScaleMax]="xScaleMax"
+      [xScaleMin]="xScaleMin"
+      [yScaleMax]="yScaleMax"
+      [yScaleMin]="yScaleMin"
+      [autoScale]="autoScale"
+      [activeEntries]="activeEntries"></ngx-charts-line-chart>
+  </div>
+</div>
