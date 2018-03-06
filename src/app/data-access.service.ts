@@ -15,7 +15,7 @@ const httpOptions =
 @Injectable()
 export class DataAccessService {
 
-	private dbUrl = 'http://ONE-022661:3001'
+	private dbUrl = 'http://ONE-022661:3000'
 
 	constructor(private http: HttpClient)
 	{ 
@@ -58,6 +58,16 @@ export class DataAccessService {
 		{
 			console.log(err);
 			return Observable.of<any>({ auth: false });
+		});
+	}
+
+	getTodaysReadings(): Observable<Reading[]>
+	{
+		const url = `${this.dbUrl}/readings/today`
+		return this.http.get<Reading[]>(url, httpOptions).catch((err: HttpErrorResponse) =>
+		{
+			console.log(err);
+			return Observable.empty<Reading[]>();
 		});
 	}
 

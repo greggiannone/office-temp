@@ -38,7 +38,6 @@ export class SubmissionPanelComponent implements OnInit {
 	{
 		this.DAService.isLoggedIn().subscribe(result =>
 		{
-			console.log('here');
 			if (!result["auth"])
 			{
 				this.currScreen = Screen.Login;

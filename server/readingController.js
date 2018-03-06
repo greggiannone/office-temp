@@ -27,7 +27,7 @@ router.get('/', function(req, res)
 	{
 		if (err) return res.status(500).send("There was a problem finding the readings.");
         res.status(200).send(readings);
-	})
+	});
 });
 
 router.get('/current', function(req, res)
@@ -38,5 +38,21 @@ router.get('/current', function(req, res)
 		res.status(200).send(result[0]);
 	});
 });
+
+router.get('/today', function(req, res)
+{
+	var start = new Date();
+	start.setHours(0, 0, 0, 0);
+	var end = new Date();
+	end.setHours(23, 59, 59, 999);
+
+	console.log(start);
+	
+	reading.find({'time': { '$gte': start, '$lt': end }}, function (err, readings)
+	{
+		if (err) return res.status(500).send("There was a problem finding the readings.");
+        res.status(200).send(readings);
+	});
+})
 
 module.exports = router;

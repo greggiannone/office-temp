@@ -11,11 +11,13 @@ export class AppComponent {
   	title = 'app';
 
 	currReading: Reading
+	readings: Reading[];
 
 	constructor(private DAService: DataAccessService) { }
 
 	ngOnInit()
 	{
 		this.DAService.getCurrentReading().subscribe(reading => this.currReading = reading)
+		this.DAService.getTodaysReadings().subscribe(readings => this.readings = readings);
 	}
 }
