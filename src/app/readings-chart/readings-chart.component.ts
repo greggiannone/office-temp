@@ -25,7 +25,7 @@ export class ReadingsChartComponent implements OnInit {
 	xScaleMax = new Date().setHours(17, 0, 0, 0);
   
 	colorScheme = {
-	  domain: ['#FF0000']
+	  domain: ['#DD8E4D']
 	};
   
 	// line, area
@@ -46,11 +46,11 @@ export class ReadingsChartComponent implements OnInit {
 			this.formattedData[0].series = [];
 			this.readings.forEach(reading =>
 			{
-				this.formattedData[0].series.push(
-				{
+				var entry = {
 					'name': new Date(reading.time.toString()),
 					'value': reading.temp,
-				});
+				}
+				this.formattedData[0].series.push(entry);
 			});
 		}
 	}
