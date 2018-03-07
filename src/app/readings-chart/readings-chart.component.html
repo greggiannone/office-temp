@@ -12,7 +12,7 @@
       <li>Thursday</li>
       <li>Friday</li>
     </ul>
-    <ngx-charts-line-chart *ngIf="readings"
+    <ngx-charts-line-chart *ngIf="readings && readings.length > 0"
       [view]="view"
       [results]="formattedData"
       [scheme]="colorScheme"
@@ -30,5 +30,6 @@
       [yScaleMin]="yScaleMin"
       [autoScale]="autoScale"
       [activeEntries]="activeEntries"></ngx-charts-line-chart>
+    <p id="message" *ngIf="readings && readings.length == 0">No readings available<br> for this day :(</p>
   </div>
 </div>

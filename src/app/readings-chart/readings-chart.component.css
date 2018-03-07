@@ -1,11 +1,6 @@
 ::ng-deep .ngx-charts
 {
 	fill: white;
-	background-color: rgb(32, 40, 82);
-	padding: 20px;
-	padding-top: 30px;
-	padding-bottom: 30px;
-	border-radius: 10px;
 }
 
 #top
@@ -31,6 +26,16 @@
 	display: flex;
 	flex-direction: row;
 	position: relative;
+	width: 700px;
+	height: 400px;
+	background-color: rgb(32, 40, 82);
+	padding: 15px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+	border-radius: 10px;
+	border-width: 5px;
+	border-color: rgb(54, 64, 116);
+	border-style: solid;
 }
 
 i
@@ -47,7 +52,7 @@ i
 #weekdays
 {
 	position: absolute;
-	left: -120px;
+	left: -125px;
 	top: 110px;
 }
 
@@ -61,4 +66,16 @@ i
 	padding-top: 15px;
 	padding-bottom: 15px;
 	background-color: rgb(32, 40, 82);
+}
+
+#weekdays li:hover
+{
+	background-color: rgb(54, 64, 116);
+}
+
+#message
+{
+	background-color: rgb(32, 40, 82);
+	margin: auto;
+	font-size: 48px;
 }
