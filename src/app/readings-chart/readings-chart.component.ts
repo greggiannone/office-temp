@@ -10,8 +10,15 @@ export class ReadingsChartComponent implements OnInit {
 
 	@Input() readings: Reading[];
 
+	selectedDay: Day;
 	formattedData: any[] = [];
 	view: any[] = [700, 400];
+
+	days(): Array<string>
+	{
+		var keys = Object.keys(Day);
+        return keys.slice(keys.length / 2);
+	}
 
 	showXAxis = true;
 	showYAxis = true;
@@ -30,7 +37,9 @@ export class ReadingsChartComponent implements OnInit {
   
 	// line, area
 	autoScale = true;
-	constructor() { }
+	constructor() 
+	{
+	}
 
 	ngOnInit() 
 	{
@@ -54,5 +63,19 @@ export class ReadingsChartComponent implements OnInit {
 			});
 		}
 	}
+	
+	onClickDay(day: Day)
+	{
+		this.selectedDay = day;
+		// change the chart day
+	}
+}
 
+enum Day
+{
+	Monday,
+	Tuesday,
+	Wednesday,
+	Thursday,
+	Friday
 }

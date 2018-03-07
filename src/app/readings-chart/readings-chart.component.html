@@ -1,16 +1,12 @@
 <div id="top">
   <div id="browser">
-    <i class="arrow left"></i>
+    <div class="arrowContainer"><i class="arrow left"></i></div>
     <p>3/5/18 - 3/10/18</p>
-    <i class="arrow right"></i>
+    <div class="arrowContainer"><i class="arrow right"></i></div>
   </div>
   <div id="chart">
     <ul id="weekdays">
-      <li>Monday</li>
-      <li>Tuesday</li>
-      <li>Wednesday</li>
-      <li>Thursday</li>
-      <li>Friday</li>
+      <li *ngFor="let day of days()" (click)="onClickDay(day)" [ngClass]="{'selected': day == selectedDay}">{{day}}</li>
     </ul>
     <ngx-charts-line-chart *ngIf="readings && readings.length > 0"
       [view]="view"
