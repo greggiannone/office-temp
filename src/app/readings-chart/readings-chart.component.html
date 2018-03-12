@@ -8,9 +8,9 @@
     <ul id="weekdays">
       <li *ngFor="let day of days()" (click)="onClickDay(day)" [ngClass]="{'selected': day == selectedDay}">{{day}}</li>
     </ul>
-      <div id="chart">
+      <div id="chart" *ngIf="formattedData && formattedData[0] && formattedData[0].series.length > 0">
         <p id="title">Readings for {{selectedDate.toLocaleDateString()}}</p>
-        <ngx-charts-line-chart *ngIf="allReadings && allReadings.length > 0"
+        <ngx-charts-line-chart
           [view]="view"
           [results]="formattedData"
           [scheme]="colorScheme"
@@ -29,7 +29,7 @@
           [autoScale]="autoScale"
           [animations]="animations"
           [activeEntries]="activeEntries"></ngx-charts-line-chart>
-        <p id="message" *ngIf="allReadings && allReadings.length == 0">No readings available<br> for this day :(</p>
-      </div>
+        </div>
+        <p id="message" *ngIf="formattedData && formattedData[0] && formattedData[0].series.length == 0">No readings available<br> for this day :(</p>
   </div>
 </div>

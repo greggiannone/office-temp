@@ -90,13 +90,13 @@ i
 #message
 {
 	background-color: rgb(32, 40, 82);
-	margin: auto;
 	font-size: 48px;
+	margin: auto;
 }
 
 #title
 {
-	margin: 0px;
 	padding: 0px;
 	padding-bottom: 10px;
+	margin: auto;
 }
