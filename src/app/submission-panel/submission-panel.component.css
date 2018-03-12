@@ -8,11 +8,12 @@
 	right: 20px;
 	width: 300px;
 	justify-content: space-between;
+	color: white;
 }
 
 #form
 {
-	background-color: rgb(62, 62, 199);
+	background-color: rgb(42, 52, 100);
 	flex: 1;
 	border-radius: 0px 0px 0px 5px;
 	padding: 15px;
@@ -23,7 +24,7 @@
 {
 	width: 50px;
 	margin-left: auto;
-	background-color: rgb(32, 40, 82);
+	background-color: rgb(68, 82, 139);
 	border: 0px;
 	border-radius: 0px 0px 5px 5px;
 	padding: 10px;

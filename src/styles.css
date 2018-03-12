@@ -10,8 +10,9 @@ body
 button
 {
 	border: 0px;
-	background-color: rgb(86, 106, 173);
+	background-color: rgb(68, 82, 139);
 	padding: 4px;
+	color: white;
 }
 
 button:focus

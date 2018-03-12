@@ -1,6 +1,8 @@
 button
 {
 	width: 80px;
+	background: rgb(68, 82, 139);
+	color: white;
 }
 
 #passLabel
