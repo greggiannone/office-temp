@@ -40,10 +40,7 @@ export class ReadingsChartComponent implements OnInit {
 	constructor() 
 	{
 		this.selectedDate = new Date();
-		this.selectedDay = this.days()[this.selectedDate.getDay()-1];
-		this.refreshDateData();
-		this.xScaleMin = this.selectedDate.setHours(6, 0, 0, 0);
-		this.xScaleMax = this.selectedDate.setHours(17, 0, 0, 0);
+		this.weekChanged();
 	}
 
 	ngOnInit() 
@@ -65,12 +62,7 @@ export class ReadingsChartComponent implements OnInit {
 		this.selectedDay = day;
 		// Set the Date based on the day enum
 		this.selectedDate.setDate(this.weekStart.getDate() + Day[this.selectedDay] - 1);
-		
-		this.xScaleMin = this.selectedDate.setHours(6, 0, 0, 0);
-		this.xScaleMax = this.selectedDate.setHours(17, 0, 0, 0);
-		console.log(this.selectedDate);
-		// Set the readings to be the list of readings that matches the current day
-		this.setFormattedChanges(this.allReadings.filter(reading => this.equalDates(new Date(reading.time), this.selectedDate)));
+		this.selectedDateChanged();
 	}
 	
 	days(): Array<string>
@@ -82,35 +74,38 @@ export class ReadingsChartComponent implements OnInit {
 	onClickNextWeek()
 	{
 		// Move the current day up by 7 days
-		this.selectedDate.setDate(this.selectedDate.getDate() + 7)
-		this.refreshDateData();
-		// Reset the selected day
-		this.selectedDay = this.days()[this.selectedDate.getDay()-1];
-		// Reset the data
-		this.setFormattedChanges(this.allReadings.filter(reading => this.equalDates(new Date(reading.time), this.selectedDate)));
+		this.selectedDate.setDate(this.selectedDate.getDate() + 7);
+		this.weekChanged();
 	}
 	
 	onClickPreviousWeek()
 	{
 		// Move the current day back by 7 days
-		this.selectedDate.setDate(this.selectedDate.getDate() - 7)
-		// Reset the selected day
-		this.selectedDay = this.days()[this.selectedDate.getDay()-1];
-
-		this.refreshDateData();
-		// Reset the data
-		this.setFormattedChanges(this.allReadings.filter(reading => this.equalDates(new Date(reading.time), this.selectedDate)));
+		this.selectedDate.setDate(this.selectedDate.getDate() - 7);
+		this.weekChanged();
 	}
 
-	private refreshDateData()
+	private weekChanged()
 	{
+		this.selectedDay = this.days()[this.selectedDate.getDay()-1];
 		// Set the week start based on the new day
 		this.weekStart = this.getWeekStart(this.selectedDate);
 		// Set the week end based on the week start
 		this.weekEnd = new Date(this.weekStart);
 		this.weekEnd.setDate(this.weekStart.getDate() + 5);
+		this.selectedDateChanged();
+	}
+
+	private selectedDateChanged()
+	{
+		// Set the scale based on the current date
 		this.xScaleMin = this.selectedDate.setHours(6, 0, 0, 0);
 		this.xScaleMax = this.selectedDate.setHours(17, 0, 0, 0);
+		// Refresh the data
+		if (this.allReadings != null)
+		{
+			this.setFormattedChanges(this.allReadings.filter(reading => this.equalDates(new Date(reading.time), this.selectedDate)));
+		}
 	}
 
 	private equalDates(day1: Date, day2: Date): boolean

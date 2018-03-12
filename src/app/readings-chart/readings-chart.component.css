@@ -51,6 +51,7 @@ i
 	margin-left: 10px;
 	margin-right: 10px;
 	padding-top: 17px;
+	cursor: pointer;
 }
 
 .arrowContainer:hover i
@@ -75,6 +76,7 @@ i
 	padding-top: 15px;
 	padding-bottom: 15px;
 	background-color: rgb(32, 40, 82);
+	cursor: pointer;
 }
 
 #weekdays li:hover
