@@ -1,31 +1,35 @@
 <div id="top">
   <div id="browser">
-    <div class="arrowContainer"><i class="arrow left"></i></div>
-    <p>3/5/18 - 3/10/18</p>
-    <div class="arrowContainer"><i class="arrow right"></i></div>
+    <div class="arrowContainer" (click)="onClickPreviousWeek()"><i class="arrow left"></i></div>
+    <p>{{weekStart.toLocaleDateString()}} - {{weekEnd.toLocaleDateString()}}</p>
+    <div class="arrowContainer" (click)="onClickNextWeek()"><i class="arrow right"></i></div>
   </div>
-  <div id="chart">
+  <div id="chartBox">
     <ul id="weekdays">
       <li *ngFor="let day of days()" (click)="onClickDay(day)" [ngClass]="{'selected': day == selectedDay}">{{day}}</li>
     </ul>
-    <ngx-charts-line-chart *ngIf="readings && readings.length > 0"
-      [view]="view"
-      [results]="formattedData"
-      [scheme]="colorScheme"
-      [gradient]="gradient"
-      [xAxis]="showXAxis"
-      [yAxis]="showYAxis"
-      [legend]="showLegend"
-      [showXAxisLabel]="showXAxisLabel"
-      [showYAxisLabel]="showYAxisLabel"
-      [xAxisLabel]="xAxisLabel"
-      [yAxisLabel]="yAxisLabel"
-      [xScaleMax]="xScaleMax"
-      [xScaleMin]="xScaleMin"
-      [yScaleMax]="yScaleMax"
-      [yScaleMin]="yScaleMin"
-      [autoScale]="autoScale"
-      [activeEntries]="activeEntries"></ngx-charts-line-chart>
-    <p id="message" *ngIf="readings && readings.length == 0">No readings available<br> for this day :(</p>
+      <div id="chart">
+        <p id="title">Readings for {{selectedDate.toLocaleDateString()}}</p>
+        <ngx-charts-line-chart *ngIf="allReadings && allReadings.length > 0"
+          [view]="view"
+          [results]="formattedData"
+          [scheme]="colorScheme"
+          [gradient]="gradient"
+          [xAxis]="showXAxis"
+          [yAxis]="showYAxis"
+          [legend]="showLegend"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yAxisLabel"
+          [xScaleMax]="xScaleMax"
+          [xScaleMin]="xScaleMin"
+          [yScaleMax]="yScaleMax"
+          [yScaleMin]="yScaleMin"
+          [autoScale]="autoScale"
+          [animations]="animations"
+          [activeEntries]="activeEntries"></ngx-charts-line-chart>
+        <p id="message" *ngIf="allReadings && allReadings.length == 0">No readings available<br> for this day :(</p>
+      </div>
   </div>
 </div>

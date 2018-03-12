@@ -8,18 +8,15 @@ import { Reading } from '../models/reading';
 })
 export class ReadingsChartComponent implements OnInit {
 
-	@Input() readings: Reading[];
+	@Input() allReadings: Reading[];
 
-	selectedDay: Day;
+	selectedDay: string;
+	weekStart: Date;
+	weekEnd: Date;
+	selectedDate: Date;
+
 	formattedData: any[] = [];
 	view: any[] = [700, 400];
-
-	days(): Array<string>
-	{
-		var keys = Object.keys(Day);
-        return keys.slice(keys.length / 2);
-	}
-
 	showXAxis = true;
 	showYAxis = true;
 	gradient = false;
@@ -28,17 +25,25 @@ export class ReadingsChartComponent implements OnInit {
 	xAxisLabel = 'Time';
 	showYAxisLabel = true;
 	yAxisLabel = 'Temperature';
-	xScaleMin = new Date().setHours(6, 0, 0, 0);
-	xScaleMax = new Date().setHours(17, 0, 0, 0);
-  
+	yScaleMin = 60;
+	yScaleMax = 80;
 	colorScheme = {
 	  domain: ['#DD8E4D']
 	};
-  
-	// line, area
 	autoScale = true;
+	xScaleMin;
+	xScaleMax;
+	animations = false;
+
+	
+
 	constructor() 
 	{
+		this.selectedDate = new Date();
+		this.selectedDay = this.days()[this.selectedDate.getDay()-1];
+		this.refreshDateData();
+		this.xScaleMin = this.selectedDate.setHours(6, 0, 0, 0);
+		this.xScaleMax = this.selectedDate.setHours(17, 0, 0, 0);
 	}
 
 	ngOnInit() 
@@ -48,34 +53,103 @@ export class ReadingsChartComponent implements OnInit {
 	ngOnChanges(changes: SimpleChange)
 	{
 		// Make sure the change event is from the match input
-		if (changes['readings'] && changes['readings'].currentValue)
+		if (changes['allReadings'] && changes['allReadings'].currentValue)
 		{
-			this.formattedData[0] = {};
-			this.formattedData[0].name = 'Temperature',
-			this.formattedData[0].series = [];
-			this.readings.forEach(reading =>
-			{
-				var entry = {
-					'name': new Date(reading.time.toString()),
-					'value': reading.temp,
-				}
-				this.formattedData[0].series.push(entry);
-			});
+			this.setFormattedChanges(this.allReadings.filter(reading => this.equalDates(new Date(reading.time), this.selectedDate)));
 		}
 	}
 	
-	onClickDay(day: Day)
+	onClickDay(day: string)
 	{
+		// Set the Day to be the day that was just clicked
 		this.selectedDay = day;
-		// change the chart day
+		// Set the Date based on the day enum
+		this.selectedDate.setDate(this.weekStart.getDate() + Day[this.selectedDay] - 1);
+		
+		this.xScaleMin = this.selectedDate.setHours(6, 0, 0, 0);
+		this.xScaleMax = this.selectedDate.setHours(17, 0, 0, 0);
+		console.log(this.selectedDate);
+		// Set the readings to be the list of readings that matches the current day
+		this.setFormattedChanges(this.allReadings.filter(reading => this.equalDates(new Date(reading.time), this.selectedDate)));
+	}
+	
+	days(): Array<string>
+	{
+		var keys = Object.keys(Day);
+		return keys.slice(keys.length / 2);
+	}
+
+	onClickNextWeek()
+	{
+		// Move the current day up by 7 days
+		this.selectedDate.setDate(this.selectedDate.getDate() + 7)
+		this.refreshDateData();
+		// Reset the selected day
+		this.selectedDay = this.days()[this.selectedDate.getDay()-1];
+		// Reset the data
+		this.setFormattedChanges(this.allReadings.filter(reading => this.equalDates(new Date(reading.time), this.selectedDate)));
+	}
+	
+	onClickPreviousWeek()
+	{
+		// Move the current day back by 7 days
+		this.selectedDate.setDate(this.selectedDate.getDate() - 7)
+		// Reset the selected day
+		this.selectedDay = this.days()[this.selectedDate.getDay()-1];
+
+		this.refreshDateData();
+		// Reset the data
+		this.setFormattedChanges(this.allReadings.filter(reading => this.equalDates(new Date(reading.time), this.selectedDate)));
+	}
+
+	private refreshDateData()
+	{
+		// Set the week start based on the new day
+		this.weekStart = this.getWeekStart(this.selectedDate);
+		// Set the week end based on the week start
+		this.weekEnd = new Date(this.weekStart);
+		this.weekEnd.setDate(this.weekStart.getDate() + 5);
+		this.xScaleMin = this.selectedDate.setHours(6, 0, 0, 0);
+		this.xScaleMax = this.selectedDate.setHours(17, 0, 0, 0);
+	}
+
+	private equalDates(day1: Date, day2: Date): boolean
+	{
+		return day1.getDate() == day2.getDate() && day1.getMonth() == day2.getMonth() &&
+			day1.getFullYear() == day2.getFullYear();
+	}
+
+	private setFormattedChanges(readings: Reading[])
+	{
+		console.log(readings);
+		this.formattedData = [];
+		this.formattedData[0] = {};
+		this.formattedData[0].name = 'Temperature',
+		this.formattedData[0].series = [];
+		readings.forEach(reading =>
+		{
+			var entry = {
+				'name': new Date(reading.time.toString()),
+				'value': reading.temp,
+			}
+			this.formattedData[0].series.push(entry);
+		});
+	}
+
+	private getWeekStart(today: Date): Date
+	{
+		var weekStart = new Date(today);
+
+		weekStart.setDate(weekStart.getDate() + today.getDay() - 1);
+		return weekStart;
 	}
 }
 
 enum Day
 {
-	Monday,
-	Tuesday,
-	Wednesday,
-	Thursday,
-	Friday
+	Monday = 1,
+	Tuesday = 2,
+	Wednesday = 3,
+	Thursday = 4,
+	Friday = 5
 }

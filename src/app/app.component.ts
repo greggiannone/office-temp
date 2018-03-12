@@ -18,6 +18,6 @@ export class AppComponent {
 	ngOnInit()
 	{
 		this.DAService.getCurrentReading().subscribe(reading => this.currReading = reading)
-		this.DAService.getTodaysReadings().subscribe(readings => this.readings = readings);
+		this.DAService.getAllReadings().subscribe(readings => this.readings = readings);
 	}
 }

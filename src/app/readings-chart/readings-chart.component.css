@@ -20,16 +20,16 @@
 	border-radius: 10px 10px 0px 0px;
 }
 
-#chart
+#chartBox
 {
 	display: flex;
 	flex-direction: row;
 	position: relative;
 	width: 700px;
-	height: 400px;
+	height: 420px;
 	background-color: rgb(32, 40, 82);
 	padding: 15px;
-	padding-top: 30px;
+	padding-top: 20px;
 	padding-bottom: 30px;
 	border-radius: 10px;
 	border-width: 5px;
@@ -92,4 +92,11 @@ i
 	background-color: rgb(32, 40, 82);
 	margin: auto;
 	font-size: 48px;
+}
+
+#title
+{
+	margin: 0px;
+	padding: 0px;
+	padding-bottom: 10px;
 }
