@@ -56,7 +56,8 @@ export class ReadingsChartComponent implements OnInit {
 		// Make sure the change event is from the match input
 		if (changes['allReadings'] && changes['allReadings'].currentValue)
 		{
-			this.setFormattedChanges(this.allReadings.filter(reading => this.equalDates(new Date(reading.time), this.selectedDate)));
+			this.formattedData = [];
+			this.setFormattedData(this.allReadings.filter(reading => this.equalDates(new Date(reading.time), this.selectedDate)));
 		}
 	}
 	
@@ -127,7 +128,7 @@ export class ReadingsChartComponent implements OnInit {
 		// Refresh the data
 		if (this.allReadings != null)
 		{
-			this.setFormattedChanges(this.allReadings.filter(reading => this.equalDates(new Date(reading.time), this.selectedDate)));
+			this.setFormattedData(this.allReadings.filter(reading => this.equalDates(new Date(reading.time), this.selectedDate)));
 		}
 	}
 
@@ -136,45 +137,28 @@ export class ReadingsChartComponent implements OnInit {
 		// Set the scale based on the current week
 		this.xScaleMin = this.weekStart.setHours(0, 0, 0, 0);
 		this.xScaleMax = this.weekEnd.setHours(23, 59, 59, 999);
+		this.formattedData = [];
 		// Refresh the data with all items between the week start/end
 		if (this.allReadings != null)
 		{
-			// TODO: this code needs to be cleaned up
-			this.setFormattedChanges(this.allReadings.filter(reading => 	
-			{
-				return this.weekStart.getTime() <= new Date(reading.time).getTime() && 
-					this.weekEnd.getTime() >= new Date(reading.time).getTime();
-			}));
-
-			this.formattedData = [];
-
 			var prevDay = this.weekStart;
 			var currDay = new Date(prevDay);
 			currDay.setDate(currDay.getDate() + 1)
 			for (var i = 0; currDay.getTime() < this.weekEnd.getTime(); i++)
 			{
-				this.formattedData[i] = {};
-				this.formattedData[i].name = i.toString(),
-				this.formattedData[i].series = [];
-
 				var readings = this.allReadings.filter(reading =>
 				{
 					return prevDay.getTime() <= new Date(reading.time).getTime() && 
 						currDay.getTime() >= new Date(reading.time).getTime();
 				});
 
-				readings.forEach(reading =>
-				{
-					var entry = {
-						'name': new Date(reading.time.toString()),
-						'value': reading.temp,
-					}
-					this.formattedData[i].series.push(entry);
-				});
+				this.addData(readings);
 
 				prevDay = new Date(currDay);
 				currDay.setDate(currDay.getDate() + 1);
 			}
+
+			this.calculateMinMax();
 		}
 	}
 
@@ -184,16 +168,22 @@ export class ReadingsChartComponent implements OnInit {
 			day1.getFullYear() == day2.getFullYear();
 	}
 
-	private setFormattedChanges(readings: Reading[])
+	private setFormattedData(readings: Reading[])
 	{
 		this.formattedData = [];
+		this.addData(readings);
+		this.calculateMinMax();
+	}
 
-		this.formattedData[0] = {};
-		this.formattedData[0].name = 'Temperature',
-		this.formattedData[0].series = [];
+	private addData(readings: Reading[])
+	{
+		var data = {};
+		data["name"] = 'Temperature',
+		data["series"] = [];
 
 		if (readings.length == 0)
 		{
+			this.formattedData.push(data);
 			return;
 		}
 
@@ -203,22 +193,40 @@ export class ReadingsChartComponent implements OnInit {
 				'name': new Date(reading.time.toString()),
 				'value': reading.temp,
 			}
-			this.formattedData[0].series.push(entry);
+			data["series"].push(entry);
 		});
-		
-		this.minTemp = readings.reduce((t1, t2) => 
-		{
-			if (t1.temp > t2.temp) return t2;
-			else return t1;
-		}).temp;
-		this.maxTemp = readings.reduce((t1, t2) => 
-		{
-			if (t1.temp < t2.temp) return t2;
-			else return t1;
-		}).temp;
 
-		this.yScaleMax = this.maxTemp + 5;
-		this.yScaleMin = this.minTemp - 5;
+		this.formattedData.push(data);
+	}
+
+	private calculateMinMax()
+	{
+		var min = 5000;
+		var max = 0;
+		this.formattedData.forEach(readings =>
+		{
+			if (readings["series"].length > 0)
+			{
+				var readingsMin = readings["series"].reduce((t1, t2) => 
+				{
+					if (t1.value > t2.value) return t2;
+					else return t1;
+				}).value;
+				var readingsMax = readings["series"].reduce((t1, t2) => 
+				{
+					if (t1.value < t2.value) return t2;
+					else return t1;
+				}).value;
+
+				min = Math.min(readingsMin, min);
+				max = Math.max(readingsMax, max);
+			}
+		})
+
+		this.minTemp = min;
+		this.maxTemp = max;
+		this.yScaleMax = max + 5;
+		this.yScaleMin = min - 5;
 	}
 
 	private getWeekStart(today: Date): Date
@@ -226,8 +234,6 @@ export class ReadingsChartComponent implements OnInit {
 		var weekStart = new Date(today);
 
 		weekStart.setDate(weekStart.getDate() - today.getDay() + 1);
-		console.log(today);
-		console.log(weekStart);
 		return weekStart;
 	}
 }
