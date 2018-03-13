@@ -63,14 +63,18 @@ export class ReadingsChartComponent implements OnInit {
 		// Set the Day to be the day that was just clicked
 		this.selectedDay = day;
 		// Set the Date based on the day enum
-		this.selectedDate.setDate(this.weekStart.getDate() + Day[this.selectedDay] - 1);
+		// We create a new day based on the week start so Date can handle the month properly
+		var newDay = new Date(this.weekStart);
+		newDay.setDate(newDay.getDate() + Day[this.selectedDay] - 1);
+		this.selectedDate = newDay;
 		this.selectedDateChanged();
 	}
 	
 	days(): Array<string>
 	{
 		var keys = Object.keys(Day);
-		return keys.slice(keys.length / 2);
+		var items = keys.slice(keys.length / 2);
+		return items;
 	}
 
 	onClickNextWeek()
@@ -122,6 +126,12 @@ export class ReadingsChartComponent implements OnInit {
 		this.formattedData[0] = {};
 		this.formattedData[0].name = 'Temperature',
 		this.formattedData[0].series = [];
+
+		if (readings.length == 0)
+		{
+			return;
+		}
+
 		readings.forEach(reading =>
 		{
 			var entry = {
@@ -130,6 +140,7 @@ export class ReadingsChartComponent implements OnInit {
 			}
 			this.formattedData[0].series.push(entry);
 		});
+		
 		this.minTemp = readings.reduce((t1, t2) => 
 		{
 			if (t1.temp > t2.temp) return t2;
@@ -159,5 +170,5 @@ enum Day
 	Tuesday = 2,
 	Wednesday = 3,
 	Thursday = 4,
-	Friday = 5
+	Friday = 5,
 }
