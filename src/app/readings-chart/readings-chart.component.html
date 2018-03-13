@@ -29,6 +29,12 @@
           [autoScale]="autoScale"
           [animations]="animations"
           [activeEntries]="activeEntries"></ngx-charts-line-chart>
+        <div id="stats">
+          <h4>High</h4>
+          <p class="temperature">{{maxTemp}} °F</p>
+          <h4>Low</h4>
+          <p class="temperature">{{minTemp}} °F</p>
+        </div>
         </div>
         <p id="message" *ngIf="formattedData && formattedData[0] && formattedData[0].series.length == 0">No readings available<br> for {{selectedDate.toLocaleDateString()}} :(</p>
   </div>

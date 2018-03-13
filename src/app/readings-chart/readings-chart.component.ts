@@ -14,6 +14,8 @@ export class ReadingsChartComponent implements OnInit {
 	weekStart: Date;
 	weekEnd: Date;
 	selectedDate: Date;
+	minTemp: number;
+	maxTemp: number;
 
 	formattedData: any[] = [];
 	view: any[] = [700, 400];
@@ -128,6 +130,16 @@ export class ReadingsChartComponent implements OnInit {
 			}
 			this.formattedData[0].series.push(entry);
 		});
+		this.minTemp = readings.reduce((t1, t2) => 
+		{
+			if (t1.temp > t2.temp) return t2;
+			else return t1;
+		}).temp;
+		this.maxTemp = readings.reduce((t1, t2) => 
+		{
+			if (t1.temp < t2.temp) return t2;
+			else return t1;
+		}).temp;
 	}
 
 	private getWeekStart(today: Date): Date
