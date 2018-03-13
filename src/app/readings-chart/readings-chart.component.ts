@@ -139,12 +139,42 @@ export class ReadingsChartComponent implements OnInit {
 		// Refresh the data with all items between the week start/end
 		if (this.allReadings != null)
 		{
+			// TODO: this code needs to be cleaned up
 			this.setFormattedChanges(this.allReadings.filter(reading => 	
 			{
 				return this.weekStart.getTime() <= new Date(reading.time).getTime() && 
 					this.weekEnd.getTime() >= new Date(reading.time).getTime();
+			}));
+
+			this.formattedData = [];
+
+			var prevDay = this.weekStart;
+			var currDay = new Date(prevDay);
+			currDay.setDate(currDay.getDate() + 1)
+			for (var i = 0; currDay.getTime() < this.weekEnd.getTime(); i++)
+			{
+				this.formattedData[i] = {};
+				this.formattedData[i].name = i.toString(),
+				this.formattedData[i].series = [];
+
+				var readings = this.allReadings.filter(reading =>
+				{
+					return prevDay.getTime() <= new Date(reading.time).getTime() && 
+						currDay.getTime() >= new Date(reading.time).getTime();
+				});
+
+				readings.forEach(reading =>
+				{
+					var entry = {
+						'name': new Date(reading.time.toString()),
+						'value': reading.temp,
+					}
+					this.formattedData[i].series.push(entry);
+				});
+
+				prevDay = new Date(currDay);
+				currDay.setDate(currDay.getDate() + 1);
 			}
-			));
 		}
 	}
 
@@ -157,6 +187,7 @@ export class ReadingsChartComponent implements OnInit {
 	private setFormattedChanges(readings: Reading[])
 	{
 		this.formattedData = [];
+
 		this.formattedData[0] = {};
 		this.formattedData[0].name = 'Temperature',
 		this.formattedData[0].series = [];
