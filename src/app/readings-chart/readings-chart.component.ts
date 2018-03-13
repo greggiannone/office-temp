@@ -92,7 +92,7 @@ export class ReadingsChartComponent implements OnInit {
 		this.weekStart = this.getWeekStart(this.selectedDate);
 		// Set the week end based on the week start
 		this.weekEnd = new Date(this.weekStart);
-		this.weekEnd.setDate(this.weekStart.getDate() + 5);
+		this.weekEnd.setDate(this.weekStart.getDate() + 4);
 		this.selectedDateChanged();
 	}
 
@@ -116,7 +116,6 @@ export class ReadingsChartComponent implements OnInit {
 
 	private setFormattedChanges(readings: Reading[])
 	{
-		console.log(readings);
 		this.formattedData = [];
 		this.formattedData[0] = {};
 		this.formattedData[0].name = 'Temperature',
@@ -135,7 +134,9 @@ export class ReadingsChartComponent implements OnInit {
 	{
 		var weekStart = new Date(today);
 
-		weekStart.setDate(weekStart.getDate() + today.getDay() - 1);
+		weekStart.setDate(weekStart.getDate() - today.getDay() + 1);
+		console.log(today);
+		console.log(weekStart);
 		return weekStart;
 	}
 }
