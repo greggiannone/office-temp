@@ -37,11 +37,13 @@ export class ReadingsChartComponent implements OnInit {
 	xScaleMax;
 	animations = false;
 
-	
+	WeekString = "Full Week";
+	private isShowingWeek = false;
 
 	constructor() 
 	{
 		this.selectedDate = new Date();
+		this.selectedDay = this.days()[this.selectedDate.getDay()-1];
 		this.weekChanged();
 	}
 
@@ -60,8 +62,15 @@ export class ReadingsChartComponent implements OnInit {
 	
 	onClickDay(day: string)
 	{
-		// Set the Day to be the day that was just clicked
 		this.selectedDay = day;
+
+		if (day == this.WeekString)
+		{
+			this.showFullWeek();
+			return;
+		}
+
+		// Set the Day to be the day that was just clicked
 		// Set the Date based on the day enum
 		// We create a new day based on the week start so Date can handle the month properly
 		var newDay = new Date(this.weekStart);
@@ -74,6 +83,7 @@ export class ReadingsChartComponent implements OnInit {
 	{
 		var keys = Object.keys(Day);
 		var items = keys.slice(keys.length / 2);
+		items.push(this.WeekString);
 		return items;
 	}
 
@@ -93,13 +103,20 @@ export class ReadingsChartComponent implements OnInit {
 
 	private weekChanged()
 	{
-		this.selectedDay = this.days()[this.selectedDate.getDay()-1];
 		// Set the week start based on the new day
 		this.weekStart = this.getWeekStart(this.selectedDate);
 		// Set the week end based on the week start
 		this.weekEnd = new Date(this.weekStart);
 		this.weekEnd.setDate(this.weekStart.getDate() + 4);
-		this.selectedDateChanged();
+
+		if (this.selectedDay == this.WeekString)
+		{
+			this.showFullWeek();
+		}
+		else
+		{
+			this.selectedDateChanged();
+		}
 	}
 
 	private selectedDateChanged()
@@ -111,6 +128,23 @@ export class ReadingsChartComponent implements OnInit {
 		if (this.allReadings != null)
 		{
 			this.setFormattedChanges(this.allReadings.filter(reading => this.equalDates(new Date(reading.time), this.selectedDate)));
+		}
+	}
+
+	private showFullWeek()
+	{
+		// Set the scale based on the current week
+		this.xScaleMin = this.weekStart.setHours(0, 0, 0, 0);
+		this.xScaleMax = this.weekEnd.setHours(23, 59, 59, 999);
+		// Refresh the data with all items between the week start/end
+		if (this.allReadings != null)
+		{
+			this.setFormattedChanges(this.allReadings.filter(reading => 	
+			{
+				return this.weekStart.getTime() <= new Date(reading.time).getTime() && 
+					this.weekEnd.getTime() >= new Date(reading.time).getTime();
+			}
+			));
 		}
 	}
 

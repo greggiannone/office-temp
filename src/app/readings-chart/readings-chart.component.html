@@ -36,6 +36,7 @@
           <p class="temperature">{{minTemp}} °F</p>
         </div>
         </div>
-        <p id="message" *ngIf="formattedData && formattedData[0] && formattedData[0].series.length == 0">No readings available<br> for {{selectedDate.toLocaleDateString()}} :(</p>
+        <p id="message" *ngIf="formattedData && formattedData[0] && formattedData[0].series.length == 0">No readings available<br> for 
+          <span *ngIf="selectedDay == WeekString">this week</span><span *ngIf="selectedDay != WeekString">{{selectedDate.toLocaleDateString()}}</span> :(</p>
   </div>
 </div>
