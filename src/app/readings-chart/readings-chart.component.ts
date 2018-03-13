@@ -185,6 +185,9 @@ export class ReadingsChartComponent implements OnInit {
 			if (t1.temp < t2.temp) return t2;
 			else return t1;
 		}).temp;
+
+		this.yScaleMax = this.maxTemp + 5;
+		this.yScaleMin = this.minTemp - 5;
 	}
 
 	private getWeekStart(today: Date): Date
