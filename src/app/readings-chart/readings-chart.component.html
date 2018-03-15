@@ -1,42 +1,40 @@
-<div id="top">
-  <div id="browser">
-    <div class="arrowContainer" (click)="onClickPreviousWeek()"><i class="arrow left"></i></div>
-    <p>{{weekStart.toLocaleDateString()}} - {{weekEnd.toLocaleDateString()}}</p>
-    <div class="arrowContainer" (click)="onClickNextWeek()"><i class="arrow right"></i></div>
-  </div>
-  <div id="chartBox">
-    <ul id="weekdays">
-      <li *ngFor="let day of days()" (click)="onClickDay(day)" [ngClass]="{'selected': day == selectedDay}">{{day}}</li>
-    </ul>
-      <div id="chart" *ngIf="formattedData && formattedData[0] && formattedData[0].series.length > 0">
-        <p id="title">Readings for {{selectedDate.toLocaleDateString()}}</p>
-        <ngx-charts-line-chart
-          [view]="view"
-          [results]="formattedData"
-          [scheme]="colorScheme"
-          [gradient]="gradient"
-          [xAxis]="showXAxis"
-          [yAxis]="showYAxis"
-          [legend]="showLegend"
-          [showXAxisLabel]="showXAxisLabel"
-          [showYAxisLabel]="showYAxisLabel"
-          [xAxisLabel]="xAxisLabel"
-          [yAxisLabel]="yAxisLabel"
-          [xScaleMax]="xScaleMax"
-          [xScaleMin]="xScaleMin"
-          [yScaleMax]="yScaleMax"
-          [yScaleMin]="yScaleMin"
-          [autoScale]="autoScale"
-          [animations]="animations"
-          [activeEntries]="activeEntries"></ngx-charts-line-chart>
-        <div id="stats">
-          <h4>High</h4>
-          <p class="temperature">{{maxTemp}} °F</p>
-          <h4>Low</h4>
-          <p class="temperature">{{minTemp}} °F</p>
-        </div>
-        </div>
-        <p id="message" *ngIf="formattedData && formattedData[0] && formattedData[0].series.length == 0">No readings available<br> for 
-          <span *ngIf="selectedDay == WeekString">this week</span><span *ngIf="selectedDay != WeekString">{{selectedDate.toLocaleDateString()}}</span> :(</p>
-  </div>
+<div id="browser">
+  <div class="arrowContainer" (click)="onClickPreviousWeek()"><i class="arrow left"></i></div>
+  <p>{{weekStart.toLocaleDateString()}} - {{weekEnd.toLocaleDateString()}}</p>
+  <div class="arrowContainer" (click)="onClickNextWeek()"><i class="arrow right"></i></div>
+</div>
+<div id="chartBox">
+  <ul id="weekdays">
+    <li *ngFor="let day of days()" (click)="onClickDay(day)" [ngClass]="{'selected': day == selectedDay}">{{day}}</li>
+  </ul>
+    <div id="chart" *ngIf="formattedData && formattedData[0] && formattedData[0].series.length > 0">
+      <p id="title">Readings for {{selectedDate.toLocaleDateString()}}</p>
+      <ngx-charts-line-chart
+        [view]="view"
+        [results]="formattedData"
+        [scheme]="colorScheme"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [xScaleMax]="xScaleMax"
+        [xScaleMin]="xScaleMin"
+        [yScaleMax]="yScaleMax"
+        [yScaleMin]="yScaleMin"
+        [autoScale]="autoScale"
+        [animations]="animations"
+        [activeEntries]="activeEntries"></ngx-charts-line-chart>
+      <div id="stats">
+        <h4>High</h4>
+        <p class="temperature">{{maxTemp}} °F</p>
+        <h4>Low</h4>
+        <p class="temperature">{{minTemp}} °F</p>
+      </div>
+      </div>
+      <p id="message" *ngIf="formattedData && formattedData[0] && formattedData[0].series.length == 0">No readings available<br> for 
+        <span *ngIf="selectedDay == WeekString">this week</span><span *ngIf="selectedDay != WeekString">{{selectedDate.toLocaleDateString()}}</span> :(</p>
 </div>

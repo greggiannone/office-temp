@@ -1,2 +1,2 @@
 <p id="latest">Latest Reading</p>
-<p id="temp" class="temperature">{{reading.temp}} °F</p>
+<p id="temp" class="temperature">{{(reading | async)?.temp}} °F</p>

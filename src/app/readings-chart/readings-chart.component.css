@@ -3,7 +3,7 @@
 	fill: white;
 }
 
-#top
+:host
 {
 	display: flex;
 	flex-direction: column;
