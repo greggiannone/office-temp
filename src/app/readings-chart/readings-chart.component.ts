@@ -143,8 +143,8 @@ export class ReadingsChartComponent implements OnInit {
 		{
 			var prevDay = this.weekStart;
 			var currDay = new Date(prevDay);
-			currDay.setDate(currDay.getDate() + 1)
-			for (var i = 0; currDay.getTime() < this.weekEnd.getTime(); i++)
+			currDay.setDate(currDay.getDate() + 1);
+			for (var i = 0; prevDay.getTime() < this.weekEnd.getTime(); i++)
 			{
 				var readings = this.allReadings.filter(reading =>
 				{
