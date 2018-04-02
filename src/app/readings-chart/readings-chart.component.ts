@@ -38,7 +38,6 @@ export class ReadingsChartComponent implements OnInit {
 	animations = false;
 
 	WeekString = "Full Week";
-	private isShowingWeek = false;
 
 	constructor() 
 	{

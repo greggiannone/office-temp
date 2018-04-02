@@ -8,7 +8,8 @@
     <li *ngFor="let day of days()" (click)="onClickDay(day)" [ngClass]="{'selected': day == selectedDay}">{{day}}</li>
   </ul>
     <div id="chart" *ngIf="formattedData && formattedData[0] && formattedData[0].series.length > 0">
-      <p id="title">Readings for {{selectedDate.toLocaleDateString()}}</p>
+      <p id="title" *ngIf="selectedDay != WeekString">Readings for {{selectedDate.toLocaleDateString()}}</p>
+      <p id="title" *ngIf="selectedDay == WeekString">Readings for {{weekStart.toLocaleDateString()}} - {{weekEnd.toLocaleDateString()}}</p>
       <ngx-charts-line-chart
         [view]="view"
         [results]="formattedData"
