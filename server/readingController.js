@@ -23,6 +23,7 @@ router.post('/', verifyToken, function(req, res, next)
 
 router.get('/', function(req, res)
 {
+	console.log(req.query);
 	reading.find({}, function (err, readings)
 	{
 		if (err) return res.status(500).send("There was a problem finding the readings.");

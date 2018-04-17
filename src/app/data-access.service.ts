@@ -15,7 +15,7 @@ const httpOptions =
 @Injectable()
 export class DataAccessService {
 
-	private dbUrl = 'http://ONE-022661:3000'
+	private dbUrl = 'http://ONE-022661:49160'
 
 	constructor(private http: HttpClient)
 	{ 

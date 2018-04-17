@@ -185,15 +185,45 @@ export class ReadingsChartComponent implements OnInit {
 			this.formattedData.push(data);
 			return;
 		}
+		
+		var buckets = [];
 
 		readings.forEach(reading =>
 		{
-			var entry = {
-				'name': new Date(reading.time.toString()),
-				'value': reading.temp,
+			var lastBucket = buckets[buckets.length -1];
+
+			if (!lastBucket)
+			{
+				buckets.push([reading]);
 			}
-			data["series"].push(entry);
-		});
+			else
+			{
+				var firstItem: Date = new Date(lastBucket[0].time.toString());
+				var currItem: Date = new Date(reading.time.toString());
+				
+				// If the dates are within the same 10 minute bucket, add the current date to the bucket
+				if (firstItem.getFullYear()  == currItem.getFullYear() && firstItem.getMonth() == currItem.getMonth() &&
+					firstItem.getDate() == currItem.getDate() && firstItem.getHours() == currItem.getHours() && 
+					Math.trunc(firstItem.getMinutes() / 10) == Math.trunc(currItem.getMinutes() / 10))
+				{
+					lastBucket.push(reading);
+				}
+				// Otherwise, create a new bucket
+				else
+				{
+					buckets.push([reading]);
+				}
+			}
+		})
+
+		buckets.forEach(bucket =>
+		{
+			// Return the average
+			data['series'].push({ 
+				'name': new Date(bucket[0].time.toString()),
+				'value': bucket.map(reading => reading.temp).reduce((prev, curr) => prev + curr) / bucket.length // average
+			});
+		})
 
 		this.formattedData.push(data);
 	}
